@@ -1,0 +1,20 @@
+<form>
+    <h3>Kalkulator kosztów montażu</h3>
+    Szerokość pomieszczenia [m]: <input type="number" id="szerokosc">
+    Długość pomieszczenia [m]: <input type="number" id="dlugosc"> <br>
+    Typ panelu <br>
+    <input type="radio" id="szerokosc, dlugosc"> Panele laminowane <br>
+    <input type="radio" id="szerokosc, dlugosc"> Panele winylowe <br>
+    <input type="radio" id="szerokosc, dlugosc"> Panele drewniane <br>
+    <input type="button" value="Oblicz" onclick="koszt()"> <br><br>
+    <p id="wynik"></p>
+
+    <h3>Koszt montażu paneli podłogowych</h3>
+    <script>
+        document.body.style.backgroundColor = "lightyellow";
+        function koszt() {
+            let szerokosc = document.getElementById('szerokosc').value;
+            let dlugosc = document.getElementById('dlugosc').value;
+        }
+    </script>
+</form>
