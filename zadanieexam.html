@@ -1,0 +1,43 @@
+<form>
+    <h3>Proste działania</h3>
+    Liczba A <input type="text" id="a"> <br>
+    Liczba B <input type="text" id="b"> <br>
+    <br>
+    <input type="button" value="+" onclick="dzialanie('+')">
+    <input type="button" value="-" onclick="dzialanie('-')">
+    <input type="button" value="*" onclick="dzialanie('*')">
+    <input type="button" value="/" onclick="dzialanie('/')">
+    <input type="button" value="A^B" onclick="dzialanie('^')">
+    <br><br>
+    <p id="wynik"></p>
+    <script>
+        document.body.style.backgroundColor = "orange";
+        document.querySelector('form').style.color = "white";
+
+        function dzialanie(operacja) {
+            let a = parseInt(document.getElementById('a').value);
+            let b = parseInt(document.getElementById('b').value);
+            let wynik;
+
+            switch (operacja) {
+                case '+':
+                    wynik = a + b;
+                    break;
+                case '-':
+                    wynik = a - b;
+                    break;
+                case '*':
+                    wynik = a * b;
+                    break;
+                case '/':
+                    wynik = a / b;
+                    break;
+                case '^':
+                    wynik = a ** b;
+                    break;
+            }
+
+            document.getElementById('wynik').innerText = "Wynik: " + wynik;
+        }
+    </script>
+</form>
