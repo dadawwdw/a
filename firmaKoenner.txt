@@ -1,0 +1,374 @@
+SQL (Structured Query Language, strukturalny język zapytań).
+Użycie SQL, zgodnie z jego nazwą, polega na zadawaniu zapytań 
+do bazy danych. 
+Zapytania można zaliczyć do jednego z czterech głównych podzbiorów:
+* SQL DML(ang. Data Manipulation Language-język manipulacji danymi),
+* SQL DDL (ang. Data Definition Language – język definicji danych),
+* SQL DCL (ang. Data Control Language – język kontroli nad danymi).
+* SQL DQL (ang. Data Query Language – język definiowania zapytań
+
+DML (Data Manipulation Language) służy do wykonywania operacji 
+na danych – do ich umieszczania w bazie, kasowania, przeglądania 
+oraz dokonywania zmian. 
+Najważniejsze polecenia z tego zbioru to:
+* INSERT – umieszczenie danych w bazie,
+* UPDATE – zmiana danych,
+* DELETE – usunięcie danych z bazy.
+Dane tekstowe muszą być zawsze ujęte w pojedynczy cudzysłów (')
+
+Dzięki DDL (Data Definition Language) można operować na strukturach, 
+w których dane są przechowywane – czyli np. dodawać, zmieniać 
+i kasować tabele, bazy, użytkowników, widoki itp. 
+Najważniejsze polecenia tej grupy to:
+* CREATE (np. CREATE TABLE, CREATE DATABASE, CREATE USER, ...) 
+		– utworzenie struktury (bazy, tabeli, indeksu itp.),
+* DROP (np. DROP TABLE, DROP DATABASE, DROP VIEW, ...) 
+		– usunięcie struktury,
+* ALTER (np. ALTER TABLE ADD COLUMN ...) 
+		– zmiana struktury (dodanie kolumny do tabeli, 
+			zmiana typu danych w kolumnie tabeli).
+* TRUNCATE - powoduje usunięcie danych z tabeli 
+	(np. TRUNCATE TABLE klienci)
+
+DCL (Data Control Language) ma zastosowanie do nadawania uprawnień 
+do obiektów bazodanowych. Najważniejsze polecenia w tej grupie to:
+* GRANT – pozwala użytkownikowi lub roli na wykonywanie operacji 
+	określonej przez nadane uprawnienie 
+	(np. GRANT ALL PRIVILEGES ON FIRMA TO PIOTR WITH GRANT OPTION 
+	– przyznanie wszystkich praw do tabeli FIRMA użytkownikowi 
+	PIOTR z opcją pozwalającą mu nadawać prawa do tej tabeli).
+* REVOKE – usuwa uprzednio nadane lub odmówione uprawnienie 
+	(np. REVOKE ALL PRIVILEGES ON FIRMA FROM PIOTR 
+	– odebranie użytkownikowi wszystkich praw do tabeli FIRMA).
+* DENY - odmawia użytkownikowi lub roli określonego uprawnienia 
+	i zapobiega odziedziczeniu go po innych rolach
+
+DQL (Data Query Language) - to instrukcje, za pomocą których możesz 
+	otrzymać z bazy określone dane. 
+	Najważniejszym poleceniem jest tutaj SELECT.
+
+TCL (ang. Transactional Control Language) 
+		– „język kontroli transakcji”
+* BEGIN - - otwiera transakcję
+* COMMIT -zatwierdza transakcję
+* ROLLBACK- cofnij transakcję
+* SAVEPOINT – zapis punkt transakcj
+
+===========================================================
+
+ ------- Tworzenie i usuwanie baz danych -------
+logowanie do serwera MySQL: C:\>mysql -u root -p
+Należy zapisać ścieżkę domyślną do foldera zawierającego programu mysql.exe
+np: C:/xampp/mysql/bin
+lub wywołać C:\>C:/xampp/mysql/bin/mysql -u root -p
+
+Wyświetlanie baz danych: SHOW DATABASES;
+
+Tworzenie nowej bazy danych: CREATE DATABASE 'baza' ;
+[CHARACTER SET utf8mb4 ;
+COLLATE utf8mb4_unicode+ci;]
+
+Wybór aktywnej bazy danych: USE 'baza';
+mysql[baza]>
+
+Tworzenie tabeli: CREATE TABLE `pracownicy` (definicje kolumn oddzielone przecinkami, nazwa kolumny typ danych typ warunku klauzule)
+
+CREATE TABLE `pracownicy` (`IDpracownika` integer PRIMARY KEY, `nazwisko` varchar(20) NOT NULL, `stanowisko` varchar(25) NOT NULL, `data_zatrudnienia` date NOT NULL, `premia` numeric(9,2), `zarobki` decimal(9,2), `IDdziału` integer NOT NULL)
+
+SHOW TABLES; - Wyświetlenie listy tabel definiowanych w bazie danych
+SHOW CREATE TABLE `nazwa_tabeli` - wyświetlenie kwerendy tworzącej tabele
+DESCRIBE `nazwa_tabeli`; - wyświetla struktury tabeli
+REPAIR TABLE `nazwa_uszkodzonej_tabeli`; - naprawa uszkodzonej tabeli
+
+-------- Wstawianie rekordów do tabeli --------
+INSERT INTO `nazwa_tabeli` [(lista kolumn)] VALUES (wyrażenia);
+INSERT INTO `nazwa_tabeli` SET
+
+Wstawianie jednego rekordu: INSERT INTO `pracownicy`
+(IDpracownika, nazwisko, stanowisko, data_zatrudnienia, zarobki, IDdziału)
+VALUES (10, 'Kowalski', 'Informatyk', '1999-11-01', 2400, 1);
+
+Wstawianie wielu rekordów: INSERT INTO pracownicy VALUES
+(20, 'Wiśniewski', 'analityk', '1996-01-01', 3000, 1000, 1);
+(30, 'Malinowski', 'księgowy', '1990-05-15', 4800, null, 1);
+(40, 'Karwowski', 'informatyk', '1996-09-01', 3800, null, 4);
+(50, 'Kowal', 'analityk', '1996-07-15', 4200, 1200, 2);
+(60, 'Maliniak', 'informatyk', '2001-01-01', 3700, null, 2);
+(70, 'Marciniak', 'informatyk', '2005-01-01', 4300, 1700, 3);
+(80, 'Pigwa', 'księgowy', '2009-12-01', 3500, 900, 3);
+(90, 'Jaskółka', 'analityk', '2005-06-15', 4400, null, 4);
+(100, 'Jaskółka', 'informatyk', '2008-08-08', 4600, null, 4);
+(110, 'Kowalska', 'informatyk', '1993-11-01', 4000, 1600, 4);
+(120, 'Wiśniewska', 'analityk', '1996-01-01', 3900, null, 3);
+(130, 'Malinowska', 'księgowy', '1999-05-15', 4300, null, 3);
+(140, 'Karwowska', 'informatyk', '2006-09-01', 3100, null, 1);
+(150, 'Kowal', 'analityk', '2010-07-15', 3600, null, 4);
+(160, 'Maliniak', 'księgowy', '2011-01-01', 3800, null, 2);
+(170, 'Marciniak', 'informatyk', '1995-12-01', 4800, 1600, 5);
+(180, 'Barski', 'księgowy', '1999-12-01', 3200, null, 1);
+(190, 'Jaskółka', 'analityk', '2005-06-15', 3200, null, 1);
+(200, 'Dąbrowska', 'informatyk', '1998-08-08', 3960, null, 5);
+
+INSERT INTO `pracownicy` SET
+`IDpracownika` = 210, `nazwisko` = 'Mouse', stanowisko = 'praktytant', `data_zatrudnienia` = '2023-09-01', `zarobki` = 3000, `IDdziału` = 2;
+
+
+----- Tworzenie nowych tabel -----
+
+CREATE TABLE dzialy
+(
+IDdziału integer PRIMARY KEY, nazwa_dzialu varchar(50) NOT NULL, miejscowość varchar(20) NOT NULL);
+
+CREATE TABLE `zaszeregowania`
+(
+`grupa` integer,
+`dolna` numeric(9,2) NOT NULL,
+`gorna` numeric(9,2) NOT NULL,
+PRIMARY KEY(`grupa`)
+);
+
+
+----- Wypełnianie tabel -----
+INSERT INTO dzialy (IDdziału, nazwa_dzialu, miejscowość)
+VALUES
+(1, 'Informatyka', 'Łódź'),
+(2, 'Dyrekcja', 'Warszawa'),
+(3, 'Księgowość', 'Kraków'),
+(4, 'Marketing', 'Poznań'),
+(5, 'Usługi', 'Wrocław');
+
+INSERT zaszeregowania VALUES
+(1, 1000, 1999.99),
+(2, 2000, 2999.99),
+(3, 3000, 3999.99),
+(4, 4000, 4999.99),
+(5, 5000, 5999.99);
+
+----- Tworzenie tabeli na podstawie innej tabeli -----
+
+CREATE TABLE <nazwa tabeli nowej> LIKE <nazwa tabeli starej>;
+
+np.: CREATE TABLE pracownicy1 LIKE pracownicy;
+
+---- Tworzenie tabeli wypełnionej bez ograniczeń ----
+CREATE TABLE pracownicy2 SELECT * FROM pracownicy;
+
+Wypełnianie tabeli danymi z innej tabeli
+INSERT pracownicy1 SELECT * FROM pracownicy
+
+Zmiana wartości pola tabeli
+UPDATE <tabela> SET <kolumna> = <wartość>[, <kolumna> = <wartość>] [WHERE <warunek>];
+
+UPDATE pracownicy SET zarobki = 3400 WHERE IDpracownika = 140;
+UPDATE pracownicy SET stanowisko = 'analityk'
+WHERE nazwisko = 'Karwowski';
+UPDATE pracownicy SET premia = '' Where premia IS NUL
+
+----- Usuwanie wiersza (rekordu) -----
+DELETE FROM <nazwa tabeli> WHERE <warunek>;
+np.
+DELETE FROM pracownicy WHERE IDpracownika = 10; (usuwamy)
+i wstawiamy:
+INSERT INTO `pracownicy` VALUES (10, 'Kowalski', 'informatyk', '1989-11-01', 3000, 0, 1);
+---- Usuwanie wszystkich danych w tabeli (tabela pozostaje) ----
+
+TRUNCATE <nazwa tabeli>; (można DELETE FROM <nazwa tabeli>;)
+np.
+TRUNCATE dzialy;
+DELETE FROM zaszeregowania;
+
+CREATE TABLE stanowiska (IDstanowiska INT, stanowisko varchar(25) NOT NULL, PRIMARY KEY(IDstanowiska) );
+
+
+
+Wypełniamy tabele
+INSERT INTO stanowiska VALUES (1, 'analityk'), (2, 'informatyk'), (3, 'ksiegowy'), (4, 'praktykant');
+
+Zmienianie wartości kolumny stanowisko w tabeli pracownicy na zgodne z tabelą stanowiska
+
+UPDATE pracownicy SET stanowisko = 1
+WHERE stanowisko = 'analityk';
+
+UPDATE pracownicy SET stanowisko = 2
+WHERE stanowisko = 'informatyk';
+
+UPDATE pracownicy SET stanowisko = 3
+WHERE stanowisko = 'ksiegowy';
+
+UPDATE pracownicy SET stanowisko = 4
+WHERE stanowisko = 'praktykant';
+
+ALTER TABLE pracownicy
+CHANGE stanowisko IDstanowiska INT NOT NULL;
+
+Dodajemy podczas tworzenia tabeli (CREATE) lub później (ALTER)
+
+---W poleceniu CREATE---
+
+1. W linii tworzącej kolumnę:
+
+PRIMARY KEY - Klucz główny
+UNIQUE - Unikatowe wartości
+REFERENCES <tabela(kolumna/y)>[ON DELETE <opcja>[ON UPDATE <opcja> - klucz obcy
+(-opcja: CASCADE, RESTRICT, SET NULL, NO ACTION, SET DEFAULT)
+DEFAULT <wartość> - wartość wstawiana domyślnie
+NOT NULL - nie może być pusta
+AUTO_INCREMENT [=<wartość początkowa>] - autonumerowanie
+
+2. poniżej definicji kolumn:
+PRIMARY KEY (<nazwa kolumny>)
+UNIQUE (<nazwa kolumny>)
+CHECK <(warunek)> - tylko poniżej
+FOREIGN KEY (<nazwa/y kolumny>) REFERENCES <tabela(kolumna/y)>
+[ON DELETE <opcja>[ON UPDATE <opcja>]
+(-opcja: CASCADE, RESTRICT, SET NULL, NO ACTION, SET DEFAULT)
+*<nazwa/y kolumny> - to nazwa kolumny w tabeli podrzędnej która ma być kluczem obcym;
+*<tabela(kolumna/y)> - to nazwa tabeli nadrzędnej i nazwa kolumn/y j.w. tej tabeli z która jest powiązana kolumna/y klucza obcego;
+
+CONSTRAINT <nazwa> <OGRANICZENIE j.w> - dodanie ograniczenia z nazwą
+
+
+CASCADE: Usuń lub zaktualizuj wiersz z tabeli nadrzędnej i automatycznie usuń lub zaktualizuj pasujące wiersze w tabeli podrzędnej. Obsługiwane są zarówno ON DELETE CASCADE, jak i ON UPDATE CASCADE. Pomiędzy dwiema tabelami nie należy definiować kilku klauzul ON UPDATE CASCADE, które działają na tę samą kolumnę w tabeli nadrzędnej lub w tabeli podrzędnej.
+
+SET NULL: Usuń lub zaktualizuj wiersz z tabeli nadrzędnej i ustaw kolumnę lub kolumny klucza obcego w tabeli podrzędnej na NULL. Obsługiwane są zarówno klauzule ON DELETE SET NULL, jak i ON UPDATE SET NULL. Jeśli określisz akcję SET NULL, upewnij się, że kolumny w tabeli podrzędnej nie zostały zadeklarowane jako NOT NULL.
+
+RESTRICT: Odrzuca operację usuwania lub aktualizacji tabeli nadrzędnej. Określenie RESTRICT (lub NO ACTION) JEST RÓWNOZNACZNE Z POMINIĘCIEM KLAUZULI on DELETE LUB on UPDATE.
+
+NO ACTION: Słowo kluczowe ze standardowego SQL.
+W MySQL odpowiednik RESTRICT. Serwer MySQL odrzuca operację usuwania lub aktualizacji tabeli nadrzędnej, jeśli w tabeli do której się odwołuje, znajduje się powiązana wartość klucza obcego. Niektóre systemy baz danych mają odroczone sprawdzanie, a NO ACTION to odroczone sprawdzanie. W MySQL ograniczenia klucza obcego są sprawdzane natychmiast, więc NO ACTION jest tym samym co RESTRICT.
+
+SET DEFAULT: Ta akcja jest rozpoznawana przez parser MySQL, ale InnoDB odrzuca definicje tabel zawierające klauzule ON DELETE SET DEFAULT lub ON UPDATE SET DEFAULT.
+
+W przypadku nieokreślonego polecenia ON DELETE lub ON UPDATE domyślną akcją jest zawsze RESTRICT.
+
+
+---- Tworzymy bazę ----
+CREATE DATABASE baza;
+USE baza;
+
+---- Tworzymy tabele ----
+bez ograniczeń:
+CREATE TABLE produkty0
+(
+numer int,
+nazwa varchar(10),
+cena numeric(9,2),
+opis varchar(100),
+nr_kategorii int
+);
+
+z ograniczeniami
+W linii tworzącej kolumnę:
+CREATE TABLE produkty1
+(
+numer int PRIMARY KEY,
+nazwa varchar(10) UNIQUE,
+cena numeric(9,2) NOT NULL DEFAULT 10,
+opis varchar(100) NOT NULL,
+nr_kategorii int REFERENCES kategorie(numer)
+);
+
+definicji kolumn:
+CREATE TABLE produkty2
+(
+numer INT,
+nazwa varchar(10),
+cena decimal(9,2) NOT NULL DEFAULT 10,
+opis varchar(100) NOT NULL,
+nr_kategorii INT,
+PRIMARY KEY (numer),
+UNIQUE (nazwa),
+CHECK (cena < 1000),
+FOREIGN KEY (nr_kategorii) REFERENCES kategorie(numer)
+);
+
+Tworzymy tabele kategorie
+CREATE TABLE kategorie
+( numer INT PRIMARY KEY AUTO_INCREMENT, nazwa varchar(10) NOT NULL );
+
+---- Wyświetlenie konstrukcji tabeli ----
+DESCRIBE produkty0;
+SHOW CREATE TABLE produkty0;
+
+DESCRIBE produkty1;
+SHOW CREATE TABLE produkty1;
+
+DESCRIBE produkty1;
+SHOW CREATE TABLE produkty2;
+
+---- Wypełniamy tabele ----
+
+INSERT INTO produkty1 VALUES
+(1, 'produkt1', 17.00, 'opis1', 2); 
+
+Wstawiamy opis:
+INSERT INTO produkty2 VALUES
+(1, 'produkt1', 17.00, 'opis1', 2);
+
+---- Wypełniamy tabelę kategorie ----
+INSERT INTO kategorie VALUES
+(null, 'pieczywo'),
+('', 'wędliny'),
+(4, 'owoce'),
+('', 'napoje');
+
+lub tak:
+INSERT INTO kategorie (nazwa) VALUES
+('pieczywo'),
+('wędliny'),
+('owoce'),
+('napoje');
+
+---- Teraz można wypełnić tabelę produkty2 ----
+
+INSERT INTO produkty2 VALUES
+(2, 'produkt1', 17.00, 'opis1', 2);
+
+INSERT INTO produkty0 VALUES
+(2, 'produkt2', 1500.00, 'opis2', 1);
+
+INSERT INTO produkty1 VALUES
+(2, 'produkt2', 1500.00, 'opis2', 1);
+
+INSERT INTO produkty2 VALUES
+(2, 'produkt2', 1500.00, 'opis2', 1);
+
+Zmieniamy cenę:
+INSERT INTO produkty2 VALUES
+(2, 'produkt2', 999.99, 'opis2', 1);
+
+INSERT INTO produkty0 VALUES
+(3, 'produkt3', 100, 'opis3', 4);
+
+INSERT INTO produkty1 VALUES
+(3, 'produkt3', 100, 'opis3', 4);
+
+zmieniamy numer:
+INSERT INTO produkty1 VALUES
+(3, 'produkt3', 100, 'opis3', 4);
+
+INSERT INTO produkty2 VALUES
+(3, 'produkt3', 100, 'opis3', 4);
+
+sprawdzamy cenę:
+INSERT INTO produkty0 VALUES
+(4, 'produkt3, '', 'opis4', 5);
+
+INSERT INTO produkty1 VALUES
+(4, 'produkt3, '', 'opis4', 5);
+
+zmieniamy nazwę:
+INSERT INTO produkty1 VALUES
+(4, 'produkt4, '', 'opis4', 5);
+
+INSERT INTO produkty2 VALUES
+(4, 'produkt4, DEFAULT, 'opis4', 5);
+
+---- Usuwanie tabel ----
+DROP TABLE produkty1;
+
+---- Zmiana nazwy tabeli ----
+
+RENAME TABLE produkty2 TO produkty3;
+ALTER TABLE produkty3 RENAME TO produkty1;
+ALTER TABLE produkty1 RENAME AS produkty;
