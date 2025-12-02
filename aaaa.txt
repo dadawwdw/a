@@ -1,0 +1,14 @@
+CREATE TABLE uczniowie (
+    numer INT PRIMARY KEY,
+    imie VARCHAR(20) NOT NULL,
+    nazwisko VARCHAR(50) NOT NULL,
+    klasa CHAR(2) NOT NULL
+);
+
+CREATE TABLE oceny (
+    id INT PRIMARY KEY,
+    numer INT,
+    przedmiot VARCHAR(20) NOT NULL,
+    ocena INT NOT NULL,
+    FOREIGN KEY (numer) REFERENCES uczniowie(numer)
+);
