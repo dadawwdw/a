@@ -1,0 +1,60 @@
+CREATE TABLE uczniowie (
+    numer INT PRIMARY KEY,
+    imie VARCHAR(20) NOT NULL,
+    nazwisko VARCHAR(50) NOT NULL,
+    klasa CHAR(2) NOT NULL
+);
+
+CREATE TABLE oceny (
+    id INT PRIMARY KEY,
+    numer INT,
+    przedmiot VARCHAR(20) NOT NULL,
+    ocena INT NOT NULL,
+    FOREIGN KEY (numer) REFERENCES uczniowie(numer)
+)
+
+INSERT INTO uczniowie (numer, imie, nazwisko, klasa) VALUES
+(1, 'Adam', 'Cygan', 'I'),
+(2, 'Ewa', 'Czajka', 'I'),
+(3, 'Piotr', 'Kowalski', 'I'),
+(4, 'Paweł', 'Nowak', 'I'),
+(5, 'Alicja', 'Nowak', 'I'),
+(6, 'Beata', 'Kawka', 'I'),
+(7, 'Adam', 'Dzik', 'II'),
+(8, 'Alicja', 'Cybulla', 'II'),
+(9, 'Zebib', 'Wolski', 'II'),
+(10, 'Bożena', 'Zawadzka', 'II'),
+(11, 'Jan', 'Wiśniewski', 'I');
+
+INSERT INTO oceny (id, numer, przedmiot, ocena) VALUES
+(1, 1, 'matematyka', 3),
+(2, 2, 'matematyka', 4),
+(3, 3, 'matematyka', 5),
+(4, 1, 'fizyka', 3),
+(5, 3, 'fizyka', 4),
+(6, 5, 'matematyka', 5),
+(7, 6, 'fizyka', 3),
+(8, 7, 'fizyka', 4),
+(9, 8, 'matematyka', 5),
+(10, 9, 'fizyka', 4),
+(11, 10, 'matematyka', 3);
+
+ALTER TABLE oceny
+ADD COLUMN opis VARCHAR(30) AFTER ocena;
+
+UPDATE oceny
+SET opis = 'praca klasowa'
+WHERE przedmiot = 'matematyka';
+UPDATE oceny
+SET opis = 'odpowiedź'
+WHERE przedmiot = 'fizyka';
+
+ALTER TABLE oceny
+CHANGE COLUMN numer nr_ucznia INT;
+
+UPDATE uczniowie
+SET klasa = 'II'
+WHERE imie = 'Beata' AND nazwisko = 'Kawka';
+
+DELETE FROM uczniowie
+WHERE imie = 'Jan' AND nazwisko = 'Wiśniewski';
