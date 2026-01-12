@@ -1,0 +1,99 @@
+<style>
+    *{
+        font-family: Tahoma;
+    }
+    body{
+        background-color: #CFB6B7;
+    }
+    h2{
+        text-align: center;
+        color: #D60420;
+    }
+    h3{
+        color: #D60420;
+    }
+    details{
+        color: #DE314A;
+        margin-left: 10%;
+        font-size: 20px;
+    }
+    form{
+        margin-left: 10%;
+        color:#D60420;
+    }
+.polecenie{
+        border: 2px dashed #D60420;
+        margin-left: 6%;
+        margin-right: 6%;
+        padding-top: 1%;
+        padding-bottom: 1%;
+        padding-right: 5%;
+        background-color: #FFF2F2;
+    }
+    .formularz{
+        width: 80%;
+        float: left;
+    }
+</style>    
+<h2>JavaScript - Stacja Paliw</h2>
+<section class="polecenie">
+<details>
+    <summary><strong>Formularz:</strong></summary>
+    <ul>
+        <li> Uzupełniony o potrzebne atrybuty w znacznikach</li>
+    </ul>
+</details>
+<details>
+    <summary><strong>Skrypt:</strong></summary>
+    <ul>
+        <li> Napisany w języku wykonywanym po stronie przeglądarki</li>
+        <li> Skrypt uruchamia się po wciśnięciu przycisku OBLICZ na stronie</li>
+        <li> Skrypt pobiera wartości z obu pól edycyjnych numerycznych</li>
+        <li> Następnie oblicza koszt paliwa ze względu na rodzaj i liczbę litrów uwzględniając:</li>
+        <li> Gdy rodzaj paliwa jest równy 1 – koszt jednego litra paliwa wynosi 4 zł</li>
+        <li> Gdy rodzaj paliwa jest równy 2 – koszt jednego litra paliwa wynosi 3,5 zł</li>
+        <li> W każdym innym przypadku koszt paliwa wynosi 0 zł</li>
+        <li> Następnie skrypt wyświetla wynik działania w paragrafie pod przyciskiem OBLICZ według wzoru: „koszt paliwa:
+	&lt;wartość&gt; zł”, gdzie &lt;wartość&gt; oznacza obliczony wcześniej koszt paliwa</li>
+    </ul>
+</details>
+</section>
+
+<!-- *********************************************************************************************************** -->
+
+<section class="formularz">
+    <h3>Oblicz koszt paliwa</h3>
+    <form>
+        Rodzaj paliwa (1-benzyna, 2-olej napędowy):<br>
+        <input type="number" id="paliwo"><br>
+        Ile litrów<br>
+        <input type="number" id="litrpaliwa"><br>
+        <input type="button" value="OBLICZ" onclick="obliczpaliwo()">
+    </form>
+    <p id="p"></p>
+</section>
+
+<script>
+    function obliczpaliwo() {
+        let paliwo1 = document.getElementById('paliwo');
+        let litr = document.getElementById('litrpaliwa');
+        let p = document.getElementById('p');
+        
+        let paliwoCena1 = 4;
+        let paliwoCena2 = 3.5;
+        let koszt = 0;
+        
+        let paliwotyp = parseInt(paliwo1.value);
+        let ileLitrow = parseFloat(litr.value);
+        
+        if (paliwotyp === 1) {
+            koszt = ileLitrow * paliwoCena1;
+        } else if (paliwotyp === 2) {
+            koszt = ileLitrow * paliwoCena2;
+        } else {
+            koszt = 0;
+        }
+        
+        p.innerText = "Koszt paliwa: " + koszt + " zł";
+    }
+</script>
