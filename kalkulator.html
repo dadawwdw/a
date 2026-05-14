@@ -54,6 +54,13 @@
             } else {
                 document.getElementById("kategoria").innerHTML = "Kategoria: Otyłość 3st.";
             }
+
+            let kategoriaElement = document.getElementById("kategoria");
+            if (BMI >= 18.5 && BMI < 25) {
+                kategoriaElement.style.color = "green";
+            } else {
+                kategoriaElement.style.color = "red";
+            }
         }
     </script>
 </body>
