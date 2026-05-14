@@ -3,7 +3,18 @@
     background-color: #7D7F85
 }
 
+main {
+    width: 800px;
+    margin: 0 auto;
+}
+
+header {
+    height: 260px;
+    width: 100%;
+}
+
 h2 {
+    background-color: #1A3B98;
     color: #AF0215
 }
 
@@ -12,6 +23,7 @@ h2 {
     width: 20%;
     background-color: #1A3B98;
     float: left;
+    text-align: center;
 }
 
 .right {
@@ -19,10 +31,9 @@ h2 {
     text-align: center;
     color: #886829;
     height: 560px;
-    width: 60%;
+    width: 80%;
     float: right;
-    box-sizing: border-box;
-    padding-top: 1rem;
+    margin-top: 40px;
 }
 
 footer {
@@ -34,11 +45,6 @@ footer {
 
 a {
     text-decoration: none;
-}
-
-main {
-    width: 800px;
-    margin: 0 auto;
 }
 
 table {
@@ -55,7 +61,12 @@ td:nth-child(even) {
     background-color: #AAAAAA;
 }
 
-img {
-    height: 260px;
-    width: 100%;
+#BMI {
+    font-size: 20px;
+    color: #886829;
+}
+
+#kategoria {
+    font-size: 50px;
+    color: #886829;
 }
