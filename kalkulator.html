@@ -12,21 +12,49 @@
             <img src="banerr.gif" alt="baner">
         </header>
             <section class="left">
+                <hr>
                 <a href="index.html"><h2>BMI</h2></a>
+                <hr>
                 <a href="kalkulator.html"><h2>Kalkulator</h2></a>
+                <hr>
             </section>
 
             <section class="right">
                 <form action=""></form>
                 <label for="waga">Waga:</label>
-                <input type="number">
+                <input type="number" id="waga">
                 <label for="wzrost">Wzrost</label>
-                <input type="number"> <br>
+                <input type="number" id="wzrost"> <br>
                 <button onclick="funckja()" >Oblicz BMI</button>
+                <p id="BMI"></p> <br>
+                <p id="kategoria"></p>
             </section>
     </main>
     <footer>
         <p>Autor strony: <i>00000000</i></p>
     </footer>
+
+    <script>
+        function funckja() {
+            let waga = document.getElementById("waga").value;
+            let wzrost = document.getElementById("wzrost").value;
+            let BMI = waga / ((wzrost/100) ** 2);
+            document.getElementById("BMI").innerHTML = "Twoje BMI wynosi: " + BMI.toFixed(2);
+
+            if (BMI < 18.5) {
+                document.getElementById("kategoria").innerHTML = "Kategoria: Niedowaga";
+            } else if (BMI >= 18.5 && BMI < 25) {
+                document.getElementById("kategoria").innerHTML = "Kategoria: Norma";
+            } else if (BMI >= 25 && BMI < 30) {
+                document.getElementById("kategoria").innerHTML = "Kategoria: Nadwaga";
+            } else if (BMI >= 30 && BMI < 35) {
+                document.getElementById("kategoria").innerHTML = "Kategoria: Otyłość 1st.";
+            } else if (BMI >= 35 && BMI < 40) {
+                document.getElementById("kategoria").innerHTML = "Kategoria: Otyłość 2st.";
+            } else {
+                document.getElementById("kategoria").innerHTML = "Kategoria: Otyłość 3st.";
+            }
+        }
+    </script>
 </body>
 </html>
