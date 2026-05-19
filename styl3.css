@@ -1,0 +1,26 @@
+#logo {
+    background-color: #FF7F50;
+    width: 25%;
+    height: 100px;
+}
+
+#baner {
+    background-color: #FF7F50;
+    margin: 70px;
+}
+
+.lewy {
+    width: 40%;
+    height: 400px;
+}
+
+.prawy {
+    width: 60%;
+    height: 400px;
+    text-align: right;
+}
+
+footer {
+    background-color: #FF7F50;
+    padding: 80px;
+}
